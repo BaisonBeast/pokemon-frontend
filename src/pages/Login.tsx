@@ -6,6 +6,7 @@ import { loginUser, signupUser } from '../api/authApi';
 import useUserStore from '../store/store';
 import { homeRoute } from '../pages/Home';
 import { leaderboardRoute } from '../pages/Leaderboard';
+import { toast } from 'react-toastify';
 
 
 export const loginRoute = createRoute({
@@ -27,7 +28,8 @@ function Login() {
   };
 
   const handleSubmit = async() => {
-    let data;
+    try {
+      let data;
     if(isSignup) {
       data =  signupUser({username: userName, password, role: selectedRole});
     } else {
@@ -38,12 +40,18 @@ function Login() {
     setUserId(data.userId);
     updateUserName('');
     setPassword('');
+    toast.success("login successfull");
     localStorage.setItem('userRole', data.role);
     localStorage.setItem('userName', data.username);
     localStorage.setItem('userId', data.userId);
     
     if(data.role === 'trainer') navigate(homeRoute);
     else navigate(leaderboardRoute)
+    } catch(error) {
+      console.log(error);
+      toast.error('Wrong credentials')
+    }
+    
   }
 
   return (
