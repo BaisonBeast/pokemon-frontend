@@ -1,5 +1,5 @@
 // src/components/AuthForm.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { rootRoute } from "../router/router";
 import { createRoute, useNavigate } from '@tanstack/react-router';
 import { loginUser, signupUser } from '../api/authApi';
