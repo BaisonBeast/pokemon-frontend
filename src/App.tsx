@@ -1,18 +1,13 @@
-import './App.css'
-// import Login from './pages/Login';
-// import Home from './pages/Home';
-// import Leaderboard from './pages/Leaderboard';
-import About from './pages/About';
-
+import { RouterProvider } from '@tanstack/react-router';
+import React from 'react';
+import { router } from './router/router';
 
 function App() {
-
   return (
-    // <Login />
-    // <Home />
-    // <Leaderboard />
-    <About />
-  )
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </React.Suspense>
+  );
 }
 
-export default App
+export default App;

@@ -1,48 +1,98 @@
-// src/components/MainContent.tsx
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import PokemonCard from './PokemonCard';
 import SearchIcon from '@mui/icons-material/Search';
+import { fetchPokemons, searchPokemons } from '../api/homeApi';
+import useUserStore from '../store/store';
+
+const useDebounce = (value: string, delay: number) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    React.useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+};
+
+interface Pokemon {
+    name: string;
+    type: string;
+    height: number;
+    weight: number;
+}
 
 const MyPokemons: React.FC = () => {
-  // Example Pokémon data
-  const [pokemons, setPokemons] = useState([
-    { name: 'Pikachu', type: 'Electric', height: 4, weight: 60 },
-    { name: 'Charizard', type: 'Fire', height: 17, weight: 905 },
-    { name: 'Bulbasaur', type: 'Grass', height: 7, weight: 69 },
-    { name: 'Squirtle', type: 'Water', height: 5, weight: 90 },
-    { name: 'Eevee', type: 'Normal', height: 3, weight: 65 },
-    { name: 'Jigglypuff', type: 'Fairy', height: 5, weight: 55 },
-    { name: 'Gengar', type: 'Ghost', height: 15, weight: 405 },
-    { name: 'Snorlax', type: 'Normal', height: 21, weight: 4600 },
-    { name: 'Mewtwo', type: 'Psychic', height: 20, weight: 1220 },
-    { name: 'Dragonite', type: 'Dragon', height: 22, weight: 2100 },
-    { name: 'Lapras', type: 'Water', height: 25, weight: 2200 },
-    { name: 'Arcanine', type: 'Fire', height: 19, weight: 1550 },
-  ]);
+    const { userId } = useUserStore();
+    const [searchQuery, setSearchQuery] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  return (
-    <div className="flex-grow p-10 bg-gray-900 text-white">
-        <div className="relative mb-4 w-2/5">
-        <input
-            type="text"
-            placeholder="Search..."
-            className="w-full p-2 bg-gray-700 text-white rounded pl-10"
-        />
-        <SearchIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        </div>
-        <div className="flex gap-4 flex-wrap">
-            {pokemons.map((pokemon) => (
-                <PokemonCard
-                    key={pokemon.name}
-                    name={pokemon.name}
-                    type={pokemon.type}
-                    height={pokemon.height}
-                    weight={pokemon.weight}
+    const debouncedSearchQuery = useDebounce(searchQuery, 500); 
+
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+    };
+
+    
+
+    const fetchQuery = async () => {
+        if (debouncedSearchQuery) {
+            return searchPokemons(debouncedSearchQuery);
+        } else {
+            return fetchPokemons(userId);
+        }
+    };
+
+    const { data: pokemons, isLoading, error } = useQuery({
+        queryKey: ['pokemons', debouncedSearchQuery],
+        queryFn: fetchQuery,
+    });
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [debouncedSearchQuery, pokemons]);
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching data</div>;
+
+    return (
+        <div className="flex-grow p-10 bg-gray-900 text-white">
+            <div className="relative mb-4 w-2/5">
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    ref={inputRef}
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="w-full p-2 bg-gray-700 text-white rounded pl-10"
                 />
-            ))}
+                <SearchIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+            <div className="flex gap-4 flex-wrap">
+                {pokemons?.length === 0 ? (
+                    <div>No Pokémon found</div>
+                ) : (
+                    pokemons.map((pokemon: Pokemon) => (
+                        <PokemonCard
+                            key={pokemon.name}
+                            name={pokemon.name}
+                            type={pokemon.type}
+                            height={pokemon.height}
+                            weight={pokemon.weight}
+                        />
+                    ))
+                )}
+            </div>
         </div>
-    </div>
-  );
+    );
 };
 
 export default MyPokemons;

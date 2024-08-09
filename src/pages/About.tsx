@@ -1,14 +1,21 @@
 import Sidebar from '../components/Sidebar';
-import About from '../components/About';
+import AboutComp from '../components/AboutComp';
+import { createRoute } from '@tanstack/react-router';
+import { rootRoute } from "../router/router";
 
+export const aboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/about',
+  component: About
+})
 
-function Home() {
+function About() {
   return (
     <div className="flex">
         <Sidebar highlight='about' />
-        <About />
+        <AboutComp />
     </div>
   )
 }
 
-export default Home
+export default About

@@ -1,15 +1,21 @@
-import React from 'react';
 import Sidebar from '../components/Sidebar';
-import Leaderboard from '../components/Leaderboard';
+import LeaderboardComp from '../components/LeaderboardComp';
+import { rootRoute } from "../router/router";
+import { createRoute } from '@tanstack/react-router';
 
+export const leaderboardRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/leaderboard',
+  component: Leaderboard
+})
 
-function Home() {
+function Leaderboard() {
   return (
     <div className="flex">
         <Sidebar highlight='leader'/>
-        <Leaderboard />
+        <LeaderboardComp />
     </div>
   )
 }
 
-export default Home
+export default Leaderboard;
