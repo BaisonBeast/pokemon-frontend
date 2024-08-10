@@ -15,10 +15,7 @@ export const useUserStore = create<UserState>((set) => ({
     role: localStorage.getItem('userRole') || null,
     userId: localStorage.getItem('userId') || '',
     setUsername: (username) => set({ username }),
-    setRole: (role) => {
-        localStorage.setItem('userRole', role || '');
-        set({ role });
-    },
+    setRole: (role) => set({ role }),
     setUserId: (userId) => set({userId})
 }));
 

@@ -39,8 +39,6 @@ const MyPokemons: React.FC = () => {
         setSearchQuery(event.target.value);
     };
 
-    
-
     const fetchQuery = async () => {
         if (debouncedSearchQuery) {
             return searchPokemons(debouncedSearchQuery);

@@ -30,23 +30,23 @@ function Login() {
   const handleSubmit = async() => {
     try {
       let data;
-    if(isSignup) {
-      data =  signupUser({username: userName, password, role: selectedRole});
-    } else {
-      data = await loginUser({username: userName, password});
-    }
-    setUsername(data.username);
-    setRole(data.role);
-    setUserId(data.userId);
-    updateUserName('');
-    setPassword('');
-    toast.success("login successfull");
-    localStorage.setItem('userRole', data.role);
-    localStorage.setItem('userName', data.username);
-    localStorage.setItem('userId', data.userId);
-    
-    if(data.role === 'trainer') navigate(homeRoute);
-    else navigate(leaderboardRoute)
+      if(isSignup) {
+        data = await signupUser({username: userName, password, role: selectedRole});
+      } else {
+        data = await loginUser({username: userName, password});
+      }
+      setUsername(data.username);
+      setRole(data.role);
+      setUserId(data.userId);
+      updateUserName('');
+      setPassword('');
+      toast.success("login successfull");
+      localStorage.setItem('userRole', data.role);
+      localStorage.setItem('userName', data.username);
+      localStorage.setItem('userId', data.userId);
+      
+      if(data.role === 'trainer') navigate(homeRoute);
+      else navigate(leaderboardRoute)
     } catch(error) {
       console.log(error);
       toast.error('Wrong credentials')

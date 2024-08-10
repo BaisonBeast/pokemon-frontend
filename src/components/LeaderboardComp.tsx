@@ -19,8 +19,14 @@ const LeaderboardComp: React.FC = () => {
 });
 
 const handleLike = async(TrainerData: TrainerLike) => {
-  const response = await likeTrainer(TrainerData);
-  toast.success(response)
+  try {
+    const response = await likeTrainer(TrainerData);
+    toast.success(response)
+  } catch(err) {
+    console.log(err);
+    toast.error('Something went wrong');
+  }
+  
 }
 
   if (isLoading) {

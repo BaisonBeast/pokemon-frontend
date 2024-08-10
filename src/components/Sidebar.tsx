@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@tanstack/react-router';
 import useUserStore from '../store/store';
+import { toast } from 'react-toastify';
 
 type SetRoleFunction = (role: string | null) => void;
 
@@ -13,6 +14,7 @@ const handleLogout = (setRole: SetRoleFunction): void => {
     localStorage.removeItem('userName');
     localStorage.removeItem('userId');
     setRole(null);
+    toast.success("Successfully logged out");
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ highlight }) => {

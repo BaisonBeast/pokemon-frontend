@@ -12,8 +12,14 @@ interface PokemonCardProps {
 }
 
 const handleAddPokemon = async(pokemonData: pokemonAdd) => {
-  const response = await addPokemon(pokemonData);
-  toast.success(response.message);
+  try {
+    const response = await addPokemon(pokemonData);
+    toast.success(response.message);
+  } catch(err) {
+    console.log(err);
+    toast.error('Something went wrong');
+  }
+  
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ name, type, height, weight, id }) => {
