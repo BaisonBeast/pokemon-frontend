@@ -38,7 +38,7 @@ const handleLike = async(TrainerData: TrainerLike) => {
   }
   return (
       <div className="flex-1 flex flex-col items-center p-8 bg-gray-800 text-white">
-        <h2 className="text-2xl font-bold mb-4 self-start ml-11 mb-14">Leaderboard</h2>
+        <h2 className="text-2xl font-bold mb-4 self-start ml-11">Leaderboard</h2>
         <div className="w-11/12 h-4/5 border border-gray-500 rounded-lg pt-5 overflow-y-auto">
           <table className="w-full text-center">
             <thead>
