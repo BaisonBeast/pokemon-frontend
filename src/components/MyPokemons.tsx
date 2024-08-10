@@ -58,8 +58,8 @@ const MyPokemons: React.FC = () => {
         }
     }, [debouncedSearchQuery, pokemons]);
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error fetching data</div>;
+    if (isLoading) return <div className='p-10 flex w-screen bg-gray-900 text-white'>Loading...</div>;
+    if (error) return <div className='p-10 flex w-screen bg-gray-900 text-white'>Error fetching data</div>;
 
     return (
         <div className="flex-grow p-10 bg-gray-900 text-white">
