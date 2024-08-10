@@ -15,6 +15,12 @@ export const loginRoute = createRoute({
   component: Login
 })
 
+interface LoginData {
+  username: string;
+  userId: string;
+  role: string
+}
+
 function Login() {
   const [isSignup, setIsSignup] = useState(false);
   const [userName, updateUserName] = useState('');
@@ -29,7 +35,7 @@ function Login() {
 
   const handleSubmit = async() => {
     try {
-      let data;
+      let data: LoginData;
       if(isSignup) {
         data = await signupUser({username: userName, password, role: selectedRole});
       } else {
@@ -51,7 +57,6 @@ function Login() {
       console.log(error);
       toast.error('Wrong credentials')
     }
-    
   }
 
   return (
