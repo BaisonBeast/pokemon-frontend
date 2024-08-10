@@ -7,6 +7,7 @@ import { homeRoute } from '../pages/Home';
 import { aboutRoute } from '../pages/About';
 import { leaderboardRoute } from '../pages/Leaderboard';
 import { loginRoute } from '../pages/Login';
+import { notFoundRoute } from '../pages/NotFound';
 import Login from '../pages/Login';
 import useUserStore from '../store/store';
 
@@ -23,6 +24,6 @@ export const rootRoute = createRootRoute({
     component: RootComponent,
 });
 
-const routeTree = rootRoute.addChildren([leaderboardRoute, homeRoute, aboutRoute , loginRoute]);
+const routeTree = rootRoute.addChildren([leaderboardRoute, homeRoute, aboutRoute , loginRoute, notFoundRoute]);
 
 export const router = createRouter({ routeTree });
