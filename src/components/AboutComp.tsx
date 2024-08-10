@@ -20,11 +20,11 @@ const AboutComp = () => {
   const {role, username} = useUserStore();
 
   if (isLoading) {
-      return <div className='p-10 flex h-screen bg-gray-900 text-white'>Loading...</div>;
+      return <div className='p-10 flex w-screen bg-gray-900 text-white'>Loading...</div>;
   }
 
   if (error) {
-      return <div className='p-10 flex h-screen bg-gray-900 text-white'>Error loading data</div>;
+      return <div className='p-10 flex w-screen bg-gray-900 text-white'>Error loading data</div>;
   }
   return (
     <>

@@ -30,11 +30,11 @@ const handleLike = async(TrainerData: TrainerLike) => {
 }
 
   if (isLoading) {
-      return <div className='p-10 flex h-screen bg-gray-900 text-white'>Loading...</div>;
+      return <div className='p-10 flex w-screen bg-gray-900 text-white'>Loading...</div>;
   }
 
   if (error) {
-      return <div className='p-10 flex h-screen bg-gray-900 text-white'>Error loading data</div>;
+      return <div className='p-10 flex w-screen bg-gray-900 text-white'>Error loading data</div>;
   }
   return (
       <div className="flex-1 flex flex-col items-center p-8 bg-gray-800 text-white">
